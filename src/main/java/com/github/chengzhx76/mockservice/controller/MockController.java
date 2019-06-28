@@ -2,6 +2,7 @@ package com.github.chengzhx76.mockservice.controller;
 
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.json.JSONUtil;
 import com.github.chengzhx76.mockservice.util.IpAdrressUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ public class MockController {
     }
 
     @GetMapping(value = "/**")
-    public String get(HttpServletRequest request) throws IOException {
+    public Map<String, Object> get(HttpServletRequest request) throws IOException {
 
         String ip = IpAdrressUtil.getIpAdrress(request);
         String path = request.getServletPath();
@@ -51,11 +52,17 @@ public class MockController {
 
         logger.info(data);
 
-        return data;
+        Map<String, Object> map = new HashMap<>();
+        map.put("ip", ip);
+        map.put("path", path);
+        map.put("header", mapHeaders);
+        map.put("params", params);
+
+        return map;
     }
 
     @PostMapping(value = "/**")
-    public String post(HttpServletRequest request) throws IOException {
+    public Map<String, Object> post(HttpServletRequest request) throws IOException {
 
         String ip = IpAdrressUtil.getIpAdrress(request);
         String path = request.getServletPath();
@@ -75,7 +82,14 @@ public class MockController {
 
         logger.info(data);
 
-        return data;
+        Map<String, Object> map = new HashMap<>();
+        map.put("ip", ip);
+        map.put("path", path);
+        map.put("header", mapHeaders);
+        map.put("params", params);
+        map.put("body", JSONUtil.parseObj(body));
+
+        return map;
     }
 
 }
