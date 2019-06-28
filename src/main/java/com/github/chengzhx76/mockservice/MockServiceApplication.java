@@ -10,5 +10,4 @@ public class MockServiceApplication {
 		SpringApplication.run(MockServiceApplication.class, args);
 	}
 
-
 }

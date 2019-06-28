@@ -1,6 +1,7 @@
 server:
-  port: 80
-#  context-path: /mock
+  port: 8007
+  servlet:
+    context-path: /thor
 
 spring:
   resources:
